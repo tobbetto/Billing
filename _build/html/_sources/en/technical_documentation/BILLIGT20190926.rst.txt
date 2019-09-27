@@ -1,0 +1,1716 @@
+===============
+TECHNICAL GUIDE
+===============
+
+.. centered:: |image0|
+
+================ ===========================
+Date: 25/09/2019 Responsible area: Olga Diaz
+================ ===========================
+
+`1. System architecture 2 <#system-architecture>`__
+
+`1.1. Module diagram 2 <#module-diagram>`__
+
+`1.2. Individual modules description 2 <#individual-modules-description>`__
+
+`1.2.1. BillingCloud Mvc 2 <#billingcloud-mvc>`__
+
+`1.2.2. BillingCloud API 3 <#billingcloud-api>`__
+
+`1.3. External dependencies 3 <#external-dependencies>`__
+
+`2. Data design 3 <#data-design>`__
+
+`2.1. BillingCloud Data Model 3 <#billingcloud-data-model>`__
+
+`2.2. BillingCloud Api 4 <#billingcloud-api-1>`__
+
+`2.2.1 Path 4 <#path>`__
+
+`2.2.2 Definitions 25 <#definitions>`__
+
+`3. SW Components 28 <#sw-components>`__
+
+`3.1. Basic components 28 <#basic-components>`__
+
+`3.2. SW Structure 29 <#sw-structure>`__
+
+`3.2.1. BillingCloud Mvc 29 <#billingcloud-mvc-1>`__
+
+`3.2.2. BillingCloud 30 <#billingcloud>`__
+
+`3.3. Algorithms and basic libraries: 30 <#algorithms-and-basic-libraries>`__
+
+`3.3.1. BillingCloud Mvc 30 <#billingcloud-mvc-2>`__
+
+`3.3.2. BillingCloud 31 <#billingcloud-1>`__
+
+System architecture 
+====================
+
+BillingCloud is a tool that allows cost management, both the costs of having applications in the cloud, as well as other costs of different origins, such as royalties, marketing, etc. This application will allow the visualization and analysis of the costs and impact to the franchisees of them following certain business rules.
+
+All software development will be done with .NET Core (cross-platform) technology and deployed in the Amazon cloud.
+
+Module diagram
+--------------
+
+|image1|
+
+Individual modules description
+------------------------------
+
+The application consists of a Web module and an API module:
+
+BillingCloud Mvc 
+~~~~~~~~~~~~~~~~~
+
+-  Overview and purpose
+
+..
+
+   Front web that allows the user to perform the following operations:
+
+-  Costs: Consultation of the costs of general and store suppliers.
+
+-  Delivery rules: Allows you to set the rules for the distribution of the costs of services between the stores.
+
+-  Reports: Display reports in the form of graphs of monthly costs by family and by service.
+
+-  Billing: Permute set rules, billing models and assignment of models to stores.
+
+-  Dependencies
+
+   -  IAM Api: Uses the IAM API so that the user can log against Azure AD.
+
+   -  BillingCloud Api: BillingCloud API module that will contain business logic.
+
+      2. .. rubric:: BillingCloud API
+            :name: billingcloud-api
+
+-  Overview and purpose
+
+..
+
+   Rest API of services required to maintain BillingCloud costs and rules.
+
+-  Dependencies
+
+   -  TPGESCOM Api: Use the TPGescom API to get information from the stores of the DATA_STORE bbdd
+
+   3. .. rubric:: External dependencies
+         :name: external-dependencies
+
+-  Flexmonster: Reporting tool used to generate the graphs.
+
+2. .. rubric:: Data design
+      :name: data-design
+
+   1. .. rubric:: BillingCloud Data Model
+         :name: billingcloud-data-model
+
+|image2|
+
+.. _billingcloud-api-1:
+
+BillingCloud Api
+----------------
+
+-  Version: 1.0.0
+
+-  URI scheme
+
+   -  Host : api.dev.aws.telepizza.com
+
+   -  BasePath : /billingcloud/v1.0
+
+   -  Schemes : HTTPS, HTTP
+
+-  Security:
+
+   -  Type : oauth2
+
+   -  Flow : implicit
+
+   -  Token URL : https://api.dev.aws.telepizza.com/authorize
+
+      1. .. rubric:: Path
+            :name: path
+
+POST /api/billingmodel/add
+--------------------------
+
+This service is used to create a billing model
+
+**Parameters**
+
+======== ====================== ======================
+Type        Name                   Schema
+======== ====================== ======================
+**Body**    **billingModelDto**    **BillingModelDto**
+\           **optional**       
+======== ====================== ======================
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Consumes**
+
+-  application/json-patch+json
+
+-  application/json
+
+-  text/json
+
+-  application/json
+
+**Tags**
+
+   • BillingModel
+
+GET /api/billingmodel/all
+
+**This service is used to get all billing models**
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Tags**
+
+   • BillingModel
+
+GET /api/billingmodel/allrulefamily
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**This service is used to get all family rules**
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Tags**
+
+   • BillingModel
+
+DELETE /api/billingmodel/delete/{id}
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This service is used to delete a billing model
+
+**Parameters**
+
+======== =============== =============
+Type        Name            Schema
+======== =============== =============
+**Path**    **id**          **string**
+\           **optional**
+======== =============== =============
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Tags**
+
+   • BillingModel
+
+DELETE /api/billingmodel/deleterulefamily/{idModel}/{id}
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This service is used to delete a family rule
+
+**Parameters**
+
+======== =============== =============
+Type        Name            Schema
+======== =============== =============
+**Path**    **id**          **string**
+\           **required**
+======== =============== =============
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Tags**
+
+   • BillingModel
+
+GET /api/billingmodel/getmodel/{id}
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This service is used to obtain a billing model by id
+
+**Parameters**
+
+======== =============== ======================
+Type        Name            Schema
+======== =============== ======================
+**Path**    **id**          **integer (int32)**
+\           **required**
+======== =============== ======================
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Tags**
+
+   • BillingModel
+
+POST /api/billingmodel/update
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This service is used to modify an existing billing model
+
+**Parameters**
+
+======== ========================== ======================
+Type        Name                       Schema
+======== ========================== ======================
+**Body**    **billingModelDataDto**    **BillingModelDto**
+\           **optional**           
+======== ========================== ======================
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Consumes**
+
+-  application/json-patch+json
+
+-  application/json
+
+-  text/json
+
+-  application/*+json
+
+**Tags**
+
+   • BillingModel
+
+POST /api/billingmodelstore/add
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This service is used to assign a billing model to a store
+
+**Parameters**
+
+======== =========================== ===========================
+Type        Name                        Schema
+======== =========================== ===========================
+**Body**    **billingModelStoreDto**    **BillingModelStoreDto**
+\           **optional**            
+======== =========================== ===========================
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Consumes**
+
+-  application/json-patch+json
+
+-  application/json
+
+-  text/json
+
+-  application/*+json
+
+**Tags**
+
+   • BillingModelStore
+
+GET /api/billingmodelstore/all
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This service is used to obtain all billing models associated with stores
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Tags**
+
+   • BillingModelStore
+
+DELETE /api/billingmodelstore/delete/{id}
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This service is used to remove the billing model associated with a store
+
+**Parameters**
+
+======== ============= =============
+Type        Name          Schema
+======== ============= =============
+**Path**    **id**        **string**
+\           *required*
+======== ============= =============
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+Tags
+
+   • BillingModelStore
+
+GET /api/billingmodelstore/getmodelstore/{id}
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This service is used to get the billing model associated with a store by id
+
+**Parameters**
+
+======== ============= ======================
+Type        Name          Schema
+======== ============= ======================
+**Path**    **id**        **integer (int32)**
+\           *required*
+======== ============= ======================
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Tags**
+
+   • BillingModelStore
+
+POST /api/billingmodelstore/update
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**This service is used to modify the billing model associated with a store**
+
+**Parameters**
+
+======== ====================== ===========================
+Type        Name                   Schema
+======== ====================== ===========================
+**Body**    **billingRelation**    **BillingModelStoreDto**
+\           *optional*         
+======== ====================== ===========================
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Consumes**
+
+-  application/json-patch+json
+
+-  application/json
+
+-  text/json
+
+-  application/*+json
+
+**Tags**
+
+   • BillingModelStore
+
+POST /api/billingrule/add
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This service is used to create a billing rule
+
+**Parameters**
+
+======== ===================== =====================
+Type        Name                  Schema
+======== ===================== =====================
+**Body**    **billingRuleDto**    **BillingRuleDto**
+\           *optional*        
+======== ===================== =====================
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Consumes**
+
+-  application/json-patch+json
+
+-  application/json
+
+-  text/json
+
+-  application/*+json
+
+**Tags**
+
+   • BillingRule
+
+GET /api/billingrule/all
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+This service is used to obtain billing rules
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Tags**
+
+   • BillingRule
+
+DELETE /api/billingrule/delete/{id}
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This service is used to delete a billing rule
+
+**Parameters**
+
+======== =============== =============
+Type        Name            Schema
+======== =============== =============
+**Path**    **id**          **string**
+\           **required**
+======== =============== =============
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Tags**
+
+   • BillingRule
+
+GET /api/billingrule/getrule/{id}
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This service is used to get a billing rule by id
+
+**Parameters**
+
+======== =============== ======================
+Type        Name            Schema
+======== =============== ======================
+**Path**    **id**          **integer (int32)**
+\           **required**
+======== =============== ======================
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Tags**
+
+   • BillingRule
+
+POST /api/billingrule/update
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This service is used to modify a billing rule
+
+**Parameters**
+
+======== ================== =====================
+Type        Name               Schema
+======== ================== =====================
+**Body**    **billingData**    **BillingRuleDto**
+\           *optional*     
+======== ================== =====================
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Consumes**
+
+-  application/json-patch+json
+
+-  application/json
+
+-  text/json
+
+-  application/*+json
+
+**Tags**
+
+   • BillingRule
+
+POST /api/costmgmt/add
+^^^^^^^^^^^^^^^^^^^^^^
+
+This service is used to add costs for AWS services
+
+**Parameters**
+
+======== ============= ==============
+Type        Name          Schema
+======== ============= ==============
+**Body**    **costes**    **CostDto**
+\           *optional*
+======== ============= ==============
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Consumes**
+
+-  application/json-patch+json
+
+-  application/json
+
+-  text/json
+
+-  application/*+json
+
+**Tags**
+
+   • CostMgmt
+
+DELETE /api/costmgmt/deletecost
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This service is used to delete costs for AWS services
+
+**Parameters**
+
+========= ============= ======================
+Type         Name          Schema
+========= ============= ======================
+**Query**    **month**     **integer (int32)**
+\            *optional*
+**Query**    **year**      **integer (int32)**
+\            *optional*
+========= ============= ======================
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Tags**
+
+   • CostMgmt
+
+GET /api/costmgmt/filter/{costFilterDto}
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**This service is used to get costs from AWS services**
+
+**Parameters**
+
+======== ==================== =============
+Type        Name                 Schema
+======== ==================== =============
+**Path**    **costFilterDto**    **string**
+\           **required**     
+======== ==================== =============
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Tags**
+
+   • CostMgmt
+
+GET /api/costmgmt/{id}
+^^^^^^^^^^^^^^^^^^^^^^
+
+**This service is used to obtain costs for AWS services by id**
+
+**Parameters**
+
+======== =============== ======================
+Type        Name            Schema
+======== =============== ======================
+**Path**    **id**          **integer (int32)**
+\           **required**
+======== =============== ======================
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Tags**
+
+   • CostMgmt
+
+POST /api/costproduct/add
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**This service is used to group AWS costs into a family or product**
+
+**Parameters**
+
+======== ===================== =====================
+Type        Name                  Schema
+======== ===================== =====================
+**Body**    **costesProducto**    **CostProductDto**
+\           **optional**      
+======== ===================== =====================
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Consumes**
+
+-  application/json-patch+json
+
+-  application/json
+
+-  text/json
+
+-  application/*+json
+
+**Tags**
+
+   • CostProduct
+
+DELETE /api/costproduct/deletecostproduct
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This service is used to eliminate a grouping of AWS costs in a family or product
+
+**Parameters**
+
+========= ============= ======================
+Type         Name          Schema
+========= ============= ======================
+**Query**    **month**     **integer (int32)**
+\            *optional*
+**Query**    **year**      **integer (int32)**
+\            *optional*
+========= ============= ======================
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Tags**
+
+   • CostProduct
+
+GET /api/costproduct/filter/{costProductFilterDto}
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This service is used to get AWS costs grouped by families based on a filter
+
+**Parameters**
+
+======== =========================== =============
+Type        Name                        Schema
+======== =========================== =============
+**Path**    **costProductFilterDto**    **String**
+\           *required*              
+======== =========================== =============
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Tags**
+
+   • CostProduct
+
+GET /api/costproduct/{id}
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**This service is used to get AWS costs grouped by families by Id.**
+
+**Parameters**
+
+======== ============= ======================
+Type        Name          Schema
+======== ============= ======================
+**Path**    **id**        **integer (int32)**
+\           *required*
+======== ============= ======================
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Tags**
+
+   • CostProduct
+
+POST /api/coststore/add
+^^^^^^^^^^^^^^^^^^^^^^^
+
+This service is used to add the AWS costs associated with the stores.
+
+**Parameters**
+
+======== ============= ===================
+Type        Name          Schema
+======== ============= ===================
+**Body**    **costes**    **CostStoreDto**
+\           *optional*
+======== ============= ===================
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Consumes**
+
+-  application/json-patch+json
+
+-  application/json
+
+-  text/json
+
+-  application/*+json
+
+**Tags**
+
+   • CostStore
+
+DELETE /api/coststore/deletecoststore
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This service is used to eliminate the AWS costs associated with stores
+
+**Parameters**
+
+========= ============= ======================
+Type         Name          Schema
+========= ============= ======================
+**Query**    **month**     **integer (int32)**
+\            *optional*
+**Query**    **year**      **integer (int32)**
+\            *optional*
+========= ============= ======================
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Tags**
+
+   • CostStore
+
+GET /api/coststore/filter
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This service is used to get the AWS costs associated with stores
+
+**Parameters**
+
+========= ==================== =============
+Type         Name                 Schema
+========= ==================== =============
+**Query**    **bussinessArea**    **string**
+\            *optional*       
+**Query**    **country**          **string**
+\            *optional*       
+**Query**    **date**             **string**
+\            *optional*       
+**Query**    **idStore**          **string**
+\            *optional*       
+========= ==================== =============
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Tags**
+
+   • CostStore
+
+GET /api/coststore/{id}
+^^^^^^^^^^^^^^^^^^^^^^^
+
+This service is used to get the AWS costs associated with stores by Id.
+
+**Parameters**
+
+======== ============= ======================
+Type        Name          Schema
+======== ============= ======================
+**Path**    **id**        **integer (int32)**
+\           *required*
+======== ============= ======================
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Tags**
+
+   • CostStore
+
+POST /api/familyrule
+^^^^^^^^^^^^^^^^^^^^
+
+This service is used to create a family rule
+
+**Parameters**
+
+======== =============== ====================
+Type        Name            Schema
+======== =============== ====================
+**Body**    **id**          **FamilyRuleDto**
+\           **optional**
+======== =============== ====================
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Consumes**
+
+-  application/json-patch+json
+
+-  application/json
+
+-  text/json
+
+-  application/*+json
+
+**Tags**
+
+   • FamilyRule
+
+GET /api/familyrule
+^^^^^^^^^^^^^^^^^^^
+
+This service is used to get a family rule.
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Tags**
+
+   • FamilyRule
+
+GET /api/familyrule/costdistributionprocess
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This service is used to distribute AWS costs across stores according to family rules.
+
+**Parameters**
+
+========= ============== ======================
+Type         Name           Schema
+========= ============== ======================
+**Query**    **country**    **string**
+\            *optional* 
+**Query**    **family**     **string**
+\            *optional* 
+**Query**    **month**      **integer (int32)**
+\            *optional* 
+**Query**    **month**      **integer (int32)**
+\            **year**   
+========= ============== ======================
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Tags**
+
+   • FamilyRule
+
+POST /api/familyrule/costsimulatedistributionprocess
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This service is used to simulate the process of distributing AWS costs between stores according to family rules.
+
+**Parameters**
+
+======== ================= ====================
+Type        Name              Schema
+======== ================= ====================
+**Body**    **familyRule**    **FamilyRuleDto**
+\           **optional**  
+======== ================= ====================
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Consumes**
+
+-  application/json-patch+json
+
+-  application/json
+
+-  text/json
+
+-  application/*+json
+
+**Tags**
+
+   • FamilyRule
+
+DELETE /api/familyrule/delete/{id}
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This service is used to remove a family rule
+
+**Parameters**
+
+======== ============= ======================
+Type        Name          Schema
+======== ============= ======================
+**Path**    **id**        **integer (int32)**
+\           *required*
+======== ============= ======================
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Tags**
+
+   • FamilyRule
+
+GET /api/familyrule/getrule/{id}
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This service is used to get a family rule by Id.
+
+**Parameters**
+
+======== ============= ======================
+Type        Name          Schema
+======== ============= ======================
+**Path**    **id**        **integer (int32)**
+\           *required*
+======== ============= ======================
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Tags**
+
+   • FamilyRule
+
+GET /api/familyrule/listado/{id}
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This service is used to get list of family rules.
+
+**Parameters**
+
+======== ============= ======================
+Type        Name          Schema
+======== ============= ======================
+**Path**    **id**        **integer (int32)**
+\           *required*
+======== ============= ======================
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Tags**
+
+   • FamilyRule
+
+POST /api/familyrule/update
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This service is used to modify a family rule.
+
+**Parameters**
+
+======== ================= ====================
+Type        Name              Schema
+======== ================= ====================
+**Body**    **familyData**    **FamilyRuleDto**
+\           *optional*    
+======== ================= ====================
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Consumes**
+
+-  application/json-patch+json
+
+-  application/json
+
+-  text/json
+
+-  application/*+json
+
+**Tags**
+
+   • FamilyRule
+
+POST /api/historicrule/add
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This service is used to add a rule to the rule history
+
+**Parameters**
+
+======== ====================== ======================
+Type        Name                   Schema
+======== ====================== ======================
+**Body**    **historicRuleDto**    **HistoricRuleDto**
+\           *optional*         
+======== ====================== ======================
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Consumes**
+
+-  application/json-patch+json
+
+-  application/json
+
+-  text/json
+
+-  application/*+json
+
+**Tags**
+
+   • HistoricRule
+
+GET /api/historicrule/all
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This service is used to obtain the history of rules
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Tags**
+
+   • HistoricRule
+
+GET /api/historicrule/filterhistoricrules
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This service is used to get the rule history by a filter
+
+**Parameters**
+
+========= ================ =============
+Type         Name             Schema
+========= ================ =============
+**Query**    **idCountry**    **string**
+\            *optional*   
+**Query**    **idProduct**    **string**
+\            *optional*   
+========= ================ =============
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Tags**
+
+   • HistoricRule
+
+GET /api/historicrule/{id}
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This service is used to get the rule history of a rule by id
+
+**Parameters**
+
+======== =============== ======================
+Type        Name            Schema
+======== =============== ======================
+**Path**    **id**          **integer (int32)**
+\           **required**
+======== =============== ======================
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Tags**
+
+   • HistoricRule
+
+GET /api/parentagemgmt
+^^^^^^^^^^^^^^^^^^^^^^
+
+This service is used to get the families in which AWS services are grouped
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Tags**
+
+   • ParentageMgmt
+
+GET /api/productmgmt/all
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+This service is used to obtain all AWS products or services
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Tags**
+
+   • ProductMgmt
+
+GET /api/productmgmt/{id}
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This service is used to obtain AWS products or services by ID
+
+**Parameters**
+
+======== =============== ======================
+Type        Name            Schema
+======== =============== ======================
+**Path**    **id**          **integer (int32)**
+\           **required**
+======== =============== ======================
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Tags**
+
+   • ProductMgmt
+
+GET /api/Project
+^^^^^^^^^^^^^^^^
+
+This service is used to obtain the projects
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Tags**
+
+   • Project
+
+GET /api/shop/getcountries
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This service is used to obtain the countries in which the costs will be distributed
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Tags**
+
+   • Shop
+
+GET /api/shop/getshops
+^^^^^^^^^^^^^^^^^^^^^^
+
+This service is used to obtain the stores on which the costs will be distributed
+
+**Parameters**
+
+========= ================== =============
+Type         Name               Schema
+========= ================== =============
+**Query**    **countryCode**    **string**
+\            **optional**   
+========= ================== =============
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Tags**
+
+   • Shop
+
+GET /api/versión
+^^^^^^^^^^^^^^^^
+
+This service is used to get the deployed version
+
+**Responses**
+
+======= ============== =================
+HTTP       Description    Schema
+======= ============== =================
+**200**    **Success**    **No Content**
+======= ============== =================
+
+**Produces**
+
+-  application/json
+
+   2. .. rubric:: Definitions
+         :name: definitions
+
+BillingModelDto:
+
+===================== ==============================
+Name                     Schema
+===================== ==============================
+billingRuleFamilyList    < BillingRuleFamily > array
+id                       integer (int32)
+name                     string
+===================== ==============================
+
+BillingModelStoreDto:
+
+===================== ==============================
+Name                     Schema
+===================== ==============================
+billingRuleFamilyList    < BillingRuleFamily > array
+active                   boolean
+id                       integer (int32)
+idModel                  integer (int32)
+idStore                  integer (int32)
+===================== ==============================
+
+BillingRuleDto:
+
+========== ==================
+Name          Schema
+========== ==================
+amount        integer (int32)
+id            integer (int32)
+name          string
+porcentage    number (double)
+========== ==================
+
+BillingRuleDto:
+
+================= ==================
+Name                 Schema
+================= ==================
+   billingModelId    integer (int32)
+   id                integer (int32)
+   idBillingRule     integer (int32)
+   idFamily          integer (int32)
+================= ==================
+
+BusinessAreaDto:
+
+================= =====================
+Name                 Schema
+================= =====================
+   businessAreaId    string
+   id                string
+   name              string
+   porcentage        string
+   stores            < StoreDto > array
+================= =====================
+
+BusinessAreaRuleDto:
+
+================= =====================
+Name                 Schema
+================= =====================
+   businessAreaId    string
+   id                string
+   name              string
+   porcentage        string
+   stores            < StoreDto > array
+================= =====================
+
+CostDto:
+
+=============== =====================
+Name               Schema
+=============== =====================
+   costs           number (double)
+   costsDirect     number (double)
+   month           integer (int32)
+   parentage       integer (int32)
+   project         integer (int32)
+   registerDate    string (date-time)
+   year            integer (int32)
+=============== =====================
+
+CostProductDto:
+
+============== ==================
+Name              Schema
+============== ==================
+   costs          number (double)
+   costsDirect    number (double)
+   month          integer (int32)
+   parentage      integer (int32)
+   product        integer (int32)
+   project        integer (int32)
+   year           integer (int32)
+============== ==================
+
+CostStoreDto:
+
+================ ==================
+Name                Schema
+================ ==================
+   bussinessArea    string
+   costs            number (double)
+   costsDirect      number (double)
+   country          string
+   month            integer (int32)
+   parentageId      integer (int32)
+   store            string
+   year             integer (int32)
+================ ==================
+
+CountryRuleDto:
+
+======================= ================================
+Name                       Schema
+======================= ================================
+   costs                   number (double)
+   businessAreaRulesDto    < BusinessAreaRuleDto > array
+   countryId               integer (int32)
+   porcentage              number (double)
+======================= ================================
+
+FamilyRuleDto:
+
+======================= ============================
+Name                       Schema
+======================= ============================
+   businessArea            < BusinessAreaDto > array
+   businessAreaNumElem     integer (int32)
+   countryRules            < CountryRuleDto > array
+   countrySelectedValue    string
+   countryTextValue        string
+   familyId                string
+   idCountryRule           string
+   idFamilyRule            string
+   idRule                  integer (int32)
+   month                   integer (int32)
+   porcenCountryValue      string
+   porcenParentageValue    string
+   productValue            string
+   providerValue           string
+   year                    integer (int32)
+======================= ============================
+
+HistoricRuleDto:
+
+========================= ==================
+Name                         Schema
+========================= ==================
+   businessAreaPorcentage    string
+   familyRuleId              integer (int32)
+   storeRuleRuleId           integer (int32)
+========================= ==================
+
+StoreDto:
+
+===== ==================
+Name     Schema
+===== ==================
+   id    integer (int32)
+===== ==================
+
+3. .. rubric:: SW Components
+      :name: sw-components
+
+   3. .. rubric:: Basic components
+         :name: basic-components
+
+   -  Visual Studio 2017
+
+   -  .NET Core 2.2 SDK (v2.2.402)
+
+   4. .. rubric:: SW Structure
+         :name: sw-structure
+
+      1. .. rubric:: BillingCloud Mvc
+            :name: billingcloud-mvc-1
+
+|image3|
+
+BillingCloud
+~~~~~~~~~~~~
+
+|image4|
+
+Algorithms and basic libraries:
+-------------------------------
+
+Manage NuGet Packages:
+
+-  TelepizzaSeedwork: https://pkgs.dev.azure.com/TelepizzaIT/_packaging/Sales.Seedwork/nuget/v3/index.json
+
+-  nuget.org: https://api.nuget.org/v3/index.json
+
+   3. .. rubric:: BillingCloud Mvc
+         :name: billingcloud-mvc-2
+
+========================================================= =============
+Name                                                         Version
+========================================================= =============
+   AWSSDK.CostExplorer                                       3.3.100.10
+   Irensaltali.Currency 1.0.2                            
+   Kafka.Producer.Sdk                                        1.0.3
+   Microsoft.AspNetCore.App                                  2.2.0
+   Microsoft.AspNetCore.Authentication.AzureAD.UI            2.2.0
+   Microsoft.AspNetCore.DataProtection.StackExchangeRedis    2.2.5
+   Microsoft.AspNetCore.Hosting.Abstractions                 2.2.0
+   Microsoft.AspNetCore.Http.Abstractions                    2.2.0
+   Microsoft.AspNetCore.Mvc                                  2.2.0
+   Microsoft.AspNetCore.Razor.Design                         2.2.0
+   Microsoft.Extensions.Caching.Abstractions                 2.2.0
+   Microsoft.Extensions.Caching.StackExchangeRedis           2.2.5
+   Microsoft.Extensions.DependencyInjection                  2.2.0
+   Microsoft.Extensions.Hosting.Abstractions                 2.2.0
+   Microsoft.Extensions.Options.ConfigurationExtensions      2.2.0
+   Microsoft.VisualStudio.Web.BrowserLink                    2.2.0
+   Microsoft.VisualStudio.Web.CodeGeneration.Design          2.2.3
+   Newtonsoft.Json                                           12.0.2
+   Npoi.Mapper                                               3.3.0
+   Seedwork.CrossCutting.Configuration                       1.0.3
+   Seedwork.CrossCutting.HttpClientInvoker                   1.0.38
+   Seedwork.IAM.Services                                     1.0.9
+   Seedwork.Kafka                                            1.0.29
+   Seedwork.Version                                          1.0.7
+   Serilog                                                   2.8.0
+   Serilog.Exceptions                                        5.3.1
+   Serilog.Extensions.Logging                                2.0.4
+   Serilog.Sinks.Elasticsearch                               8.0.0
+========================================================= =============
+
+.. _billingcloud-1:
+
+BillingCloud
+~~~~~~~~~~~~
+
+=================================================== ==========
+Name                                                   Version
+=================================================== ==========
+AutoMapper.Extensions.Microsoft.DependencyInjection 6.1.0
+Kralizek.Extensions.Configuration.AWSSecretsManager 1.1.0
+Microsoft.AspNetCore.App                            2.2.0
+Microsoft.EntityFrameworkCore.Design                2.2.4
+Microsoft.Extensions.Caching.Redis                  2.2.0
+Pomelo.EntityFrameworkCore.MySql                    2.2.0
+Scrutor                                             3.0.2
+Seedwork.CrossCutting.Configuration                 1.0.3
+Seedwork.CrossCutting.HttpClientInvoker             1.0.33
+Seedwork.CrossCutting.Injecter                      1.0.11
+Seedwork.CrossCutting.MVC                           1.0.18
+Seedwork.CrossCutting.SwaggerExtensions             1.0.8
+Seedwork.Data                                       1.0.11
+Seedwork.Domain                                     1.0.12
+Seedwork.Version                                    1.0.6
+Serilog                                             2.8.0
+Serilog.Exceptions                                  5.0.0
+Serilog.Extensions.Logging                          2.0.4
+Serilog.Sinks.Elasticsearch                         7.1.0
+Swashbuckle.AspNetCore                              4.0.1
+=================================================== ==========
+
+.. |image0| image:: media/image1.png
+   :width: 3.83333in
+   :height: 4.04167in
+.. |image1| image:: media/image2.png
+   :width: 5.62708in
+   :height: 3.17361in
+.. |image2| image:: media/image3.png
+   :width: 5.90694in
+   :height: 5.20694in
+.. |image3| image:: media/image4.png
+   :width: 4.54559in
+   :height: 5.58261in
+.. |image4| image:: media/image5.png
+   :width: 4.97049in
+   :height: 6.36522in

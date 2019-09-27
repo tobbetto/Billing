@@ -1,0 +1,3307 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>TECHNICAL GUIDE &mdash; Billing 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="Welcome to BlocksInCloud Billing’s documentation!" href="../../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Billing
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Guía Técnica:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">TECHNICAL GUIDE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#system-architecture">System architecture</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-diagram">Module diagram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#individual-modules-description">Individual modules description</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#billingcloud-mvc">BillingCloud Mvc</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#billingcloud-api-1">BillingCloud Api</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#post-api-billingmodel-add">POST /api/billingmodel/add</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#billingcloud">BillingCloud</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#algorithms-and-basic-libraries">Algorithms and basic libraries:</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#billingcloud-1">BillingCloud</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Billing</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+      <li>TECHNICAL GUIDE</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/en/technical_documentation/BILLIGT20190926.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="technical-guide">
+<h1>TECHNICAL GUIDE<a class="headerlink" href="#technical-guide" title="Permalink to this headline">¶</a></h1>
+<p class="centered">
+<strong><a class="reference internal" href="../../_images/image1.png"><img alt="image0" src="../../_images/image1.png" style="width: 3.83333in; height: 4.04167in;" /></a></strong></p><table class="docutils align-default">
+<colgroup>
+<col style="width: 37%" />
+<col style="width: 63%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Date: 25/09/2019</p></td>
+<td><p>Responsible area: Olga Diaz</p></td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference external" href="#system-architecture">1. System architecture 2</a></p>
+<p><a class="reference external" href="#module-diagram">1.1. Module diagram 2</a></p>
+<p><a class="reference external" href="#individual-modules-description">1.2. Individual modules description 2</a></p>
+<p><a class="reference external" href="#billingcloud-mvc">1.2.1. BillingCloud Mvc 2</a></p>
+<p><a class="reference external" href="#billingcloud-api">1.2.2. BillingCloud API 3</a></p>
+<p><a class="reference external" href="#external-dependencies">1.3. External dependencies 3</a></p>
+<p><a class="reference external" href="#data-design">2. Data design 3</a></p>
+<p><a class="reference external" href="#billingcloud-data-model">2.1. BillingCloud Data Model 3</a></p>
+<p><a class="reference external" href="#billingcloud-api-1">2.2. BillingCloud Api 4</a></p>
+<p><a class="reference external" href="#path">2.2.1 Path 4</a></p>
+<p><a class="reference external" href="#definitions">2.2.2 Definitions 25</a></p>
+<p><a class="reference external" href="#sw-components">3. SW Components 28</a></p>
+<p><a class="reference external" href="#basic-components">3.1. Basic components 28</a></p>
+<p><a class="reference external" href="#sw-structure">3.2. SW Structure 29</a></p>
+<p><a class="reference external" href="#billingcloud-mvc-1">3.2.1. BillingCloud Mvc 29</a></p>
+<p><a class="reference external" href="#billingcloud">3.2.2. BillingCloud 30</a></p>
+<p><a class="reference external" href="#algorithms-and-basic-libraries">3.3. Algorithms and basic libraries: 30</a></p>
+<p><a class="reference external" href="#billingcloud-mvc-2">3.3.1. BillingCloud Mvc 30</a></p>
+<p><a class="reference external" href="#billingcloud-1">3.3.2. BillingCloud 31</a></p>
+<div class="section" id="system-architecture">
+<h2>System architecture<a class="headerlink" href="#system-architecture" title="Permalink to this headline">¶</a></h2>
+<p>BillingCloud is a tool that allows cost management, both the costs of having applications in the cloud, as well as other costs of different origins, such as royalties, marketing, etc. This application will allow the visualization and analysis of the costs and impact to the franchisees of them following certain business rules.</p>
+<p>All software development will be done with .NET Core (cross-platform) technology and deployed in the Amazon cloud.</p>
+<div class="section" id="module-diagram">
+<h3>Module diagram<a class="headerlink" href="#module-diagram" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference internal" href="../../_images/image2.png"><img alt="image1" src="../../_images/image2.png" style="width: 5.62708in; height: 3.17361in;" /></a></p>
+</div>
+<div class="section" id="individual-modules-description">
+<h3>Individual modules description<a class="headerlink" href="#individual-modules-description" title="Permalink to this headline">¶</a></h3>
+<p>The application consists of a Web module and an API module:</p>
+<div class="section" id="billingcloud-mvc">
+<h4>BillingCloud Mvc<a class="headerlink" href="#billingcloud-mvc" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p>Overview and purpose</p></li>
+</ul>
+<blockquote>
+<div><p>Front web that allows the user to perform the following operations:</p>
+</div></blockquote>
+<ul>
+<li><p>Costs: Consultation of the costs of general and store suppliers.</p></li>
+<li><p>Delivery rules: Allows you to set the rules for the distribution of the costs of services between the stores.</p></li>
+<li><p>Reports: Display reports in the form of graphs of monthly costs by family and by service.</p></li>
+<li><p>Billing: Permute set rules, billing models and assignment of models to stores.</p></li>
+<li><p>Dependencies</p>
+<ul>
+<li><p>IAM Api: Uses the IAM API so that the user can log against Azure AD.</p></li>
+<li><p>BillingCloud Api: BillingCloud API module that will contain business logic.</p>
+<ol class="arabic" start="2">
+<li><p class="rubric" id="billingcloud-api">BillingCloud API</p>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>Overview and purpose</p></li>
+</ul>
+<blockquote>
+<div><p>Rest API of services required to maintain BillingCloud costs and rules.</p>
+</div></blockquote>
+<ul>
+<li><p>Dependencies</p>
+<ul class="simple">
+<li><p>TPGESCOM Api: Use the TPGescom API to get information from the stores of the DATA_STORE bbdd</p></li>
+</ul>
+<ol class="arabic" start="3">
+<li><p class="rubric" id="external-dependencies">External dependencies</p>
+</li>
+</ol>
+</li>
+<li><p>Flexmonster: Reporting tool used to generate the graphs.</p></li>
+</ul>
+<ol class="arabic" start="2">
+<li><p class="rubric" id="data-design">Data design</p>
+<ol class="arabic">
+<li><p class="rubric" id="billingcloud-data-model">BillingCloud Data Model</p>
+</li>
+</ol>
+</li>
+</ol>
+<p><a class="reference internal" href="../../_images/image3.png"><img alt="image2" src="../../_images/image3.png" style="width: 5.90694in; height: 5.20694in;" /></a></p>
+</div>
+</div>
+<div class="section" id="billingcloud-api-1">
+<span id="id1"></span><h3>BillingCloud Api<a class="headerlink" href="#billingcloud-api-1" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>Version: 1.0.0</p></li>
+<li><p>URI scheme</p>
+<ul class="simple">
+<li><p>Host : api.dev.aws.telepizza.com</p></li>
+<li><p>BasePath : /billingcloud/v1.0</p></li>
+<li><p>Schemes : HTTPS, HTTP</p></li>
+</ul>
+</li>
+<li><p>Security:</p>
+<ul>
+<li><p>Type : oauth2</p></li>
+<li><p>Flow : implicit</p></li>
+<li><p>Token URL : <a class="reference external" href="https://api.dev.aws.telepizza.com/authorize">https://api.dev.aws.telepizza.com/authorize</a></p>
+<ol class="arabic">
+<li><p class="rubric" id="path">Path</p>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="post-api-billingmodel-add">
+<h3>POST /api/billingmodel/add<a class="headerlink" href="#post-api-billingmodel-add" title="Permalink to this headline">¶</a></h3>
+<p>This service is used to create a billing model</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 42%" />
+<col style="width: 42%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Body</strong></p></td>
+<td><p><strong>billingModelDto</strong></p></td>
+<td><p><strong>BillingModelDto</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><strong>optional</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Consumes</strong></p>
+<ul class="simple">
+<li><p>application/json-patch+json</p></li>
+<li><p>application/json</p></li>
+<li><p>text/json</p></li>
+<li><p>application/json</p></li>
+</ul>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>BillingModel</p></li>
+</ul>
+</div></blockquote>
+<p>GET /api/billingmodel/all</p>
+<p><strong>This service is used to get all billing models</strong></p>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>BillingModel</p></li>
+</ul>
+</div></blockquote>
+<p><strong>This service is used to get all family rules</strong></p>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>BillingModel</p></li>
+</ul>
+</div></blockquote>
+<p>This service is used to delete a billing model</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 42%" />
+<col style="width: 36%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Path</strong></p></td>
+<td><p><strong>id</strong></p></td>
+<td><p><strong>string</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><strong>optional</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>BillingModel</p></li>
+</ul>
+</div></blockquote>
+<p>This service is used to delete a family rule</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 42%" />
+<col style="width: 36%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Path</strong></p></td>
+<td><p><strong>id</strong></p></td>
+<td><p><strong>string</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><strong>required</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>BillingModel</p></li>
+</ul>
+</div></blockquote>
+<p>This service is used to obtain a billing model by id</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 33%" />
+<col style="width: 49%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Path</strong></p></td>
+<td><p><strong>id</strong></p></td>
+<td><p><strong>integer (int32)</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><strong>required</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>BillingModel</p></li>
+</ul>
+</div></blockquote>
+<p>This service is used to modify an existing billing model</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 46%" />
+<col style="width: 39%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Body</strong></p></td>
+<td><p><strong>billingModelDataDto</strong></p></td>
+<td><p><strong>BillingModelDto</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><strong>optional</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Consumes</strong></p>
+<ul class="simple">
+<li><p>application/json-patch+json</p></li>
+<li><p>application/json</p></li>
+<li><p>text/json</p></li>
+<li><p>application/<a href="#id2"><span class="problematic" id="id3">*</span></a>+json</p></li>
+</ul>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>BillingModel</p></li>
+</ul>
+</div></blockquote>
+<p>This service is used to assign a billing model to a store</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 44%" />
+<col style="width: 44%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Body</strong></p></td>
+<td><p><strong>billingModelStoreDto</strong></p></td>
+<td><p><strong>BillingModelStoreDto</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><strong>optional</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Consumes</strong></p>
+<ul class="simple">
+<li><p>application/json-patch+json</p></li>
+<li><p>application/json</p></li>
+<li><p>text/json</p></li>
+<li><p>application/<a href="#id4"><span class="problematic" id="id5">*</span></a>+json</p></li>
+</ul>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>BillingModelStore</p></li>
+</ul>
+</div></blockquote>
+<p>This service is used to obtain all billing models associated with stores</p>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>BillingModelStore</p></li>
+</ul>
+</div></blockquote>
+<p>This service is used to remove the billing model associated with a store</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 38%" />
+<col style="width: 38%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Path</strong></p></td>
+<td><p><strong>id</strong></p></td>
+<td><p><strong>string</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><em>required</em></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p>Tags</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>BillingModelStore</p></li>
+</ul>
+</div></blockquote>
+<p>This service is used to get the billing model associated with a store by id</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 30%" />
+<col style="width: 51%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Path</strong></p></td>
+<td><p><strong>id</strong></p></td>
+<td><p><strong>integer (int32)</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><em>required</em></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>BillingModelStore</p></li>
+</ul>
+</div></blockquote>
+<p><strong>This service is used to modify the billing model associated with a store</strong></p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 39%" />
+<col style="width: 47%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Body</strong></p></td>
+<td><p><strong>billingRelation</strong></p></td>
+<td><p><strong>BillingModelStoreDto</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><em>optional</em></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Consumes</strong></p>
+<ul class="simple">
+<li><p>application/json-patch+json</p></li>
+<li><p>application/json</p></li>
+<li><p>text/json</p></li>
+<li><p>application/<a href="#id6"><span class="problematic" id="id7">*</span></a>+json</p></li>
+</ul>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>BillingModelStore</p></li>
+</ul>
+</div></blockquote>
+<p>This service is used to create a billing rule</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 42%" />
+<col style="width: 42%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Body</strong></p></td>
+<td><p><strong>billingRuleDto</strong></p></td>
+<td><p><strong>BillingRuleDto</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><em>optional</em></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Consumes</strong></p>
+<ul class="simple">
+<li><p>application/json-patch+json</p></li>
+<li><p>application/json</p></li>
+<li><p>text/json</p></li>
+<li><p>application/<a href="#id8"><span class="problematic" id="id9">*</span></a>+json</p></li>
+</ul>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>BillingRule</p></li>
+</ul>
+</div></blockquote>
+<p>This service is used to obtain billing rules</p>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>BillingRule</p></li>
+</ul>
+</div></blockquote>
+<p>This service is used to delete a billing rule</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 42%" />
+<col style="width: 36%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Path</strong></p></td>
+<td><p><strong>id</strong></p></td>
+<td><p><strong>string</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><strong>required</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>BillingRule</p></li>
+</ul>
+</div></blockquote>
+<p>This service is used to get a billing rule by id</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 33%" />
+<col style="width: 49%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Path</strong></p></td>
+<td><p><strong>id</strong></p></td>
+<td><p><strong>integer (int32)</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><strong>required</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>BillingRule</p></li>
+</ul>
+</div></blockquote>
+<p>This service is used to modify a billing rule</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 38%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Body</strong></p></td>
+<td><p><strong>billingData</strong></p></td>
+<td><p><strong>BillingRuleDto</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><em>optional</em></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Consumes</strong></p>
+<ul class="simple">
+<li><p>application/json-patch+json</p></li>
+<li><p>application/json</p></li>
+<li><p>text/json</p></li>
+<li><p>application/<a href="#id10"><span class="problematic" id="id11">*</span></a>+json</p></li>
+</ul>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>BillingRule</p></li>
+</ul>
+</div></blockquote>
+<p>This service is used to add costs for AWS services</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 37%" />
+<col style="width: 40%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Body</strong></p></td>
+<td><p><strong>costes</strong></p></td>
+<td><p><strong>CostDto</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><em>optional</em></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Consumes</strong></p>
+<ul class="simple">
+<li><p>application/json-patch+json</p></li>
+<li><p>application/json</p></li>
+<li><p>text/json</p></li>
+<li><p>application/<a href="#id12"><span class="problematic" id="id13">*</span></a>+json</p></li>
+</ul>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>CostMgmt</p></li>
+</ul>
+</div></blockquote>
+<p>This service is used to delete costs for AWS services</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 30%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Query</strong></p></td>
+<td><p><strong>month</strong></p></td>
+<td><p><strong>integer (int32)</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><em>optional</em></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>Query</strong></p></td>
+<td><p><strong>year</strong></p></td>
+<td><p><strong>integer (int32)</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><em>optional</em></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>CostMgmt</p></li>
+</ul>
+</div></blockquote>
+<p><strong>This service is used to get costs from AWS services</strong></p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 49%" />
+<col style="width: 32%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Path</strong></p></td>
+<td><p><strong>costFilterDto</strong></p></td>
+<td><p><strong>string</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><strong>required</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>CostMgmt</p></li>
+</ul>
+</div></blockquote>
+<p><strong>This service is used to obtain costs for AWS services by id</strong></p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 33%" />
+<col style="width: 49%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Path</strong></p></td>
+<td><p><strong>id</strong></p></td>
+<td><p><strong>integer (int32)</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><strong>required</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>CostMgmt</p></li>
+</ul>
+</div></blockquote>
+<p><strong>This service is used to group AWS costs into a family or product</strong></p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 42%" />
+<col style="width: 42%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Body</strong></p></td>
+<td><p><strong>costesProducto</strong></p></td>
+<td><p><strong>CostProductDto</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><strong>optional</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Consumes</strong></p>
+<ul class="simple">
+<li><p>application/json-patch+json</p></li>
+<li><p>application/json</p></li>
+<li><p>text/json</p></li>
+<li><p>application/<a href="#id14"><span class="problematic" id="id15">*</span></a>+json</p></li>
+</ul>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>CostProduct</p></li>
+</ul>
+</div></blockquote>
+<p>This service is used to eliminate a grouping of AWS costs in a family or product</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 30%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Query</strong></p></td>
+<td><p><strong>month</strong></p></td>
+<td><p><strong>integer (int32)</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><em>optional</em></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>Query</strong></p></td>
+<td><p><strong>year</strong></p></td>
+<td><p><strong>integer (int32)</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><em>optional</em></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>CostProduct</p></li>
+</ul>
+</div></blockquote>
+<p>This service is used to get AWS costs grouped by families based on a filter</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 56%" />
+<col style="width: 27%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Path</strong></p></td>
+<td><p><strong>costProductFilterDto</strong></p></td>
+<td><p><strong>String</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><em>required</em></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>CostProduct</p></li>
+</ul>
+</div></blockquote>
+<p><strong>This service is used to get AWS costs grouped by families by Id.</strong></p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 30%" />
+<col style="width: 51%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Path</strong></p></td>
+<td><p><strong>id</strong></p></td>
+<td><p><strong>integer (int32)</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><em>required</em></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>CostProduct</p></li>
+</ul>
+</div></blockquote>
+<p>This service is used to add the AWS costs associated with the stores.</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 33%" />
+<col style="width: 48%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Body</strong></p></td>
+<td><p><strong>costes</strong></p></td>
+<td><p><strong>CostStoreDto</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><em>optional</em></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Consumes</strong></p>
+<ul class="simple">
+<li><p>application/json-patch+json</p></li>
+<li><p>application/json</p></li>
+<li><p>text/json</p></li>
+<li><p>application/<a href="#id16"><span class="problematic" id="id17">*</span></a>+json</p></li>
+</ul>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>CostStore</p></li>
+</ul>
+</div></blockquote>
+<p>This service is used to eliminate the AWS costs associated with stores</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 30%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Query</strong></p></td>
+<td><p><strong>month</strong></p></td>
+<td><p><strong>integer (int32)</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><em>optional</em></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>Query</strong></p></td>
+<td><p><strong>year</strong></p></td>
+<td><p><strong>integer (int32)</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><em>optional</em></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>CostStore</p></li>
+</ul>
+</div></blockquote>
+<p>This service is used to get the AWS costs associated with stores</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 48%" />
+<col style="width: 31%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Query</strong></p></td>
+<td><p><strong>bussinessArea</strong></p></td>
+<td><p><strong>string</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><em>optional</em></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>Query</strong></p></td>
+<td><p><strong>country</strong></p></td>
+<td><p><strong>string</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><em>optional</em></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>Query</strong></p></td>
+<td><p><strong>date</strong></p></td>
+<td><p><strong>string</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><em>optional</em></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>Query</strong></p></td>
+<td><p><strong>idStore</strong></p></td>
+<td><p><strong>string</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><em>optional</em></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>CostStore</p></li>
+</ul>
+</div></blockquote>
+<p>This service is used to get the AWS costs associated with stores by Id.</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 30%" />
+<col style="width: 51%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Path</strong></p></td>
+<td><p><strong>id</strong></p></td>
+<td><p><strong>integer (int32)</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><em>required</em></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>CostStore</p></li>
+</ul>
+</div></blockquote>
+<p>This service is used to create a family rule</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 35%" />
+<col style="width: 47%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Body</strong></p></td>
+<td><p><strong>id</strong></p></td>
+<td><p><strong>FamilyRuleDto</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><strong>optional</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Consumes</strong></p>
+<ul class="simple">
+<li><p>application/json-patch+json</p></li>
+<li><p>application/json</p></li>
+<li><p>text/json</p></li>
+<li><p>application/<a href="#id18"><span class="problematic" id="id19">*</span></a>+json</p></li>
+</ul>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>FamilyRule</p></li>
+</ul>
+</div></blockquote>
+<p>This service is used to get a family rule.</p>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>FamilyRule</p></li>
+</ul>
+</div></blockquote>
+<p>This service is used to distribute AWS costs across stores according to family rules.</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 31%" />
+<col style="width: 49%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Query</strong></p></td>
+<td><p><strong>country</strong></p></td>
+<td><p><strong>string</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><em>optional</em></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>Query</strong></p></td>
+<td><p><strong>family</strong></p></td>
+<td><p><strong>string</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><em>optional</em></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>Query</strong></p></td>
+<td><p><strong>month</strong></p></td>
+<td><p><strong>integer (int32)</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><em>optional</em></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>Query</strong></p></td>
+<td><p><strong>month</strong></p></td>
+<td><p><strong>integer (int32)</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><strong>year</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>FamilyRule</p></li>
+</ul>
+</div></blockquote>
+<p>This service is used to simulate the process of distributing AWS costs between stores according to family rules.</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 38%" />
+<col style="width: 44%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Body</strong></p></td>
+<td><p><strong>familyRule</strong></p></td>
+<td><p><strong>FamilyRuleDto</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><strong>optional</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Consumes</strong></p>
+<ul class="simple">
+<li><p>application/json-patch+json</p></li>
+<li><p>application/json</p></li>
+<li><p>text/json</p></li>
+<li><p>application/<a href="#id20"><span class="problematic" id="id21">*</span></a>+json</p></li>
+</ul>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>FamilyRule</p></li>
+</ul>
+</div></blockquote>
+<p>This service is used to remove a family rule</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 30%" />
+<col style="width: 51%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Path</strong></p></td>
+<td><p><strong>id</strong></p></td>
+<td><p><strong>integer (int32)</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><em>required</em></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>FamilyRule</p></li>
+</ul>
+</div></blockquote>
+<p>This service is used to get a family rule by Id.</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 30%" />
+<col style="width: 51%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Path</strong></p></td>
+<td><p><strong>id</strong></p></td>
+<td><p><strong>integer (int32)</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><em>required</em></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>FamilyRule</p></li>
+</ul>
+</div></blockquote>
+<p>This service is used to get list of family rules.</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 30%" />
+<col style="width: 51%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Path</strong></p></td>
+<td><p><strong>id</strong></p></td>
+<td><p><strong>integer (int32)</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><em>required</em></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>FamilyRule</p></li>
+</ul>
+</div></blockquote>
+<p>This service is used to modify a family rule.</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 38%" />
+<col style="width: 44%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Body</strong></p></td>
+<td><p><strong>familyData</strong></p></td>
+<td><p><strong>FamilyRuleDto</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><em>optional</em></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Consumes</strong></p>
+<ul class="simple">
+<li><p>application/json-patch+json</p></li>
+<li><p>application/json</p></li>
+<li><p>text/json</p></li>
+<li><p>application/<a href="#id22"><span class="problematic" id="id23">*</span></a>+json</p></li>
+</ul>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>FamilyRule</p></li>
+</ul>
+</div></blockquote>
+<p>This service is used to add a rule to the rule history</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 42%" />
+<col style="width: 42%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Body</strong></p></td>
+<td><p><strong>historicRuleDto</strong></p></td>
+<td><p><strong>HistoricRuleDto</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><em>optional</em></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Consumes</strong></p>
+<ul class="simple">
+<li><p>application/json-patch+json</p></li>
+<li><p>application/json</p></li>
+<li><p>text/json</p></li>
+<li><p>application/<a href="#id24"><span class="problematic" id="id25">*</span></a>+json</p></li>
+</ul>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>HistoricRule</p></li>
+</ul>
+</div></blockquote>
+<p>This service is used to obtain the history of rules</p>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>HistoricRule</p></li>
+</ul>
+</div></blockquote>
+<p>This service is used to get the rule history by a filter</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 42%" />
+<col style="width: 34%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Query</strong></p></td>
+<td><p><strong>idCountry</strong></p></td>
+<td><p><strong>string</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><em>optional</em></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>Query</strong></p></td>
+<td><p><strong>idProduct</strong></p></td>
+<td><p><strong>string</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><em>optional</em></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>HistoricRule</p></li>
+</ul>
+</div></blockquote>
+<p>This service is used to get the rule history of a rule by id</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 33%" />
+<col style="width: 49%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Path</strong></p></td>
+<td><p><strong>id</strong></p></td>
+<td><p><strong>integer (int32)</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><strong>required</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>HistoricRule</p></li>
+</ul>
+</div></blockquote>
+<p>This service is used to get the families in which AWS services are grouped</p>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>ParentageMgmt</p></li>
+</ul>
+</div></blockquote>
+<p>This service is used to obtain all AWS products or services</p>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>ProductMgmt</p></li>
+</ul>
+</div></blockquote>
+<p>This service is used to obtain AWS products or services by ID</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 33%" />
+<col style="width: 49%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Path</strong></p></td>
+<td><p><strong>id</strong></p></td>
+<td><p><strong>integer (int32)</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><strong>required</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>ProductMgmt</p></li>
+</ul>
+</div></blockquote>
+<p>This service is used to obtain the projects</p>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Project</p></li>
+</ul>
+</div></blockquote>
+<p>This service is used to obtain the countries in which the costs will be distributed</p>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Shop</p></li>
+</ul>
+</div></blockquote>
+<p>This service is used to obtain the stores on which the costs will be distributed</p>
+<p><strong>Parameters</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 45%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Query</strong></p></td>
+<td><p><strong>countryCode</strong></p></td>
+<td><p><strong>string</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><strong>optional</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Shop</p></li>
+</ul>
+</div></blockquote>
+<p>This service is used to get the deployed version</p>
+<p><strong>Responses</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 37%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>HTTP</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>200</strong></p></td>
+<td><p><strong>Success</strong></p></td>
+<td><p><strong>No Content</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Produces</strong></p>
+<ul>
+<li><p>application/json</p>
+<ol class="arabic" start="2">
+<li><p class="rubric" id="definitions">Definitions</p>
+</li>
+</ol>
+</li>
+</ul>
+<p>BillingModelDto:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 41%" />
+<col style="width: 59%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>billingRuleFamilyList</p></td>
+<td><p>&lt; BillingRuleFamily &gt; array</p></td>
+</tr>
+<tr class="row-odd"><td><p>id</p></td>
+<td><p>integer (int32)</p></td>
+</tr>
+<tr class="row-even"><td><p>name</p></td>
+<td><p>string</p></td>
+</tr>
+</tbody>
+</table>
+<p>BillingModelStoreDto:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 41%" />
+<col style="width: 59%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>billingRuleFamilyList</p></td>
+<td><p>&lt; BillingRuleFamily &gt; array</p></td>
+</tr>
+<tr class="row-odd"><td><p>active</p></td>
+<td><p>boolean</p></td>
+</tr>
+<tr class="row-even"><td><p>id</p></td>
+<td><p>integer (int32)</p></td>
+</tr>
+<tr class="row-odd"><td><p>idModel</p></td>
+<td><p>integer (int32)</p></td>
+</tr>
+<tr class="row-even"><td><p>idStore</p></td>
+<td><p>integer (int32)</p></td>
+</tr>
+</tbody>
+</table>
+<p>BillingRuleDto:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 36%" />
+<col style="width: 64%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>amount</p></td>
+<td><p>integer (int32)</p></td>
+</tr>
+<tr class="row-odd"><td><p>id</p></td>
+<td><p>integer (int32)</p></td>
+</tr>
+<tr class="row-even"><td><p>name</p></td>
+<td><p>string</p></td>
+</tr>
+<tr class="row-odd"><td><p>porcentage</p></td>
+<td><p>number (double)</p></td>
+</tr>
+</tbody>
+</table>
+<p>BillingRuleDto:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 49%" />
+<col style="width: 51%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>billingModelId</p></td>
+<td><p>integer (int32)</p></td>
+</tr>
+<tr class="row-odd"><td><p>id</p></td>
+<td><p>integer (int32)</p></td>
+</tr>
+<tr class="row-even"><td><p>idBillingRule</p></td>
+<td><p>integer (int32)</p></td>
+</tr>
+<tr class="row-odd"><td><p>idFamily</p></td>
+<td><p>integer (int32)</p></td>
+</tr>
+</tbody>
+</table>
+<p>BusinessAreaDto:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 45%" />
+<col style="width: 55%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>businessAreaId</p></td>
+<td><p>string</p></td>
+</tr>
+<tr class="row-odd"><td><p>id</p></td>
+<td><p>string</p></td>
+</tr>
+<tr class="row-even"><td><p>name</p></td>
+<td><p>string</p></td>
+</tr>
+<tr class="row-odd"><td><p>porcentage</p></td>
+<td><p>string</p></td>
+</tr>
+<tr class="row-even"><td><p>stores</p></td>
+<td><p>&lt; StoreDto &gt; array</p></td>
+</tr>
+</tbody>
+</table>
+<p>BusinessAreaRuleDto:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 45%" />
+<col style="width: 55%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>businessAreaId</p></td>
+<td><p>string</p></td>
+</tr>
+<tr class="row-odd"><td><p>id</p></td>
+<td><p>string</p></td>
+</tr>
+<tr class="row-even"><td><p>name</p></td>
+<td><p>string</p></td>
+</tr>
+<tr class="row-odd"><td><p>porcentage</p></td>
+<td><p>string</p></td>
+</tr>
+<tr class="row-even"><td><p>stores</p></td>
+<td><p>&lt; StoreDto &gt; array</p></td>
+</tr>
+</tbody>
+</table>
+<p>CostDto:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 42%" />
+<col style="width: 58%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>costs</p></td>
+<td><p>number (double)</p></td>
+</tr>
+<tr class="row-odd"><td><p>costsDirect</p></td>
+<td><p>number (double)</p></td>
+</tr>
+<tr class="row-even"><td><p>month</p></td>
+<td><p>integer (int32)</p></td>
+</tr>
+<tr class="row-odd"><td><p>parentage</p></td>
+<td><p>integer (int32)</p></td>
+</tr>
+<tr class="row-even"><td><p>project</p></td>
+<td><p>integer (int32)</p></td>
+</tr>
+<tr class="row-odd"><td><p>registerDate</p></td>
+<td><p>string (date-time)</p></td>
+</tr>
+<tr class="row-even"><td><p>year</p></td>
+<td><p>integer (int32)</p></td>
+</tr>
+</tbody>
+</table>
+<p>CostProductDto:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 44%" />
+<col style="width: 56%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>costs</p></td>
+<td><p>number (double)</p></td>
+</tr>
+<tr class="row-odd"><td><p>costsDirect</p></td>
+<td><p>number (double)</p></td>
+</tr>
+<tr class="row-even"><td><p>month</p></td>
+<td><p>integer (int32)</p></td>
+</tr>
+<tr class="row-odd"><td><p>parentage</p></td>
+<td><p>integer (int32)</p></td>
+</tr>
+<tr class="row-even"><td><p>product</p></td>
+<td><p>integer (int32)</p></td>
+</tr>
+<tr class="row-odd"><td><p>project</p></td>
+<td><p>integer (int32)</p></td>
+</tr>
+<tr class="row-even"><td><p>year</p></td>
+<td><p>integer (int32)</p></td>
+</tr>
+</tbody>
+</table>
+<p>CostStoreDto:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 47%" />
+<col style="width: 53%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>bussinessArea</p></td>
+<td><p>string</p></td>
+</tr>
+<tr class="row-odd"><td><p>costs</p></td>
+<td><p>number (double)</p></td>
+</tr>
+<tr class="row-even"><td><p>costsDirect</p></td>
+<td><p>number (double)</p></td>
+</tr>
+<tr class="row-odd"><td><p>country</p></td>
+<td><p>string</p></td>
+</tr>
+<tr class="row-even"><td><p>month</p></td>
+<td><p>integer (int32)</p></td>
+</tr>
+<tr class="row-odd"><td><p>parentageId</p></td>
+<td><p>integer (int32)</p></td>
+</tr>
+<tr class="row-even"><td><p>store</p></td>
+<td><p>string</p></td>
+</tr>
+<tr class="row-odd"><td><p>year</p></td>
+<td><p>integer (int32)</p></td>
+</tr>
+</tbody>
+</table>
+<p>CountryRuleDto:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 42%" />
+<col style="width: 58%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>costs</p></td>
+<td><p>number (double)</p></td>
+</tr>
+<tr class="row-odd"><td><p>businessAreaRulesDto</p></td>
+<td><p>&lt; BusinessAreaRuleDto &gt; array</p></td>
+</tr>
+<tr class="row-even"><td><p>countryId</p></td>
+<td><p>integer (int32)</p></td>
+</tr>
+<tr class="row-odd"><td><p>porcentage</p></td>
+<td><p>number (double)</p></td>
+</tr>
+</tbody>
+</table>
+<p>FamilyRuleDto:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 45%" />
+<col style="width: 55%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>businessArea</p></td>
+<td><p>&lt; BusinessAreaDto &gt; array</p></td>
+</tr>
+<tr class="row-odd"><td><p>businessAreaNumElem</p></td>
+<td><p>integer (int32)</p></td>
+</tr>
+<tr class="row-even"><td><p>countryRules</p></td>
+<td><p>&lt; CountryRuleDto &gt; array</p></td>
+</tr>
+<tr class="row-odd"><td><p>countrySelectedValue</p></td>
+<td><p>string</p></td>
+</tr>
+<tr class="row-even"><td><p>countryTextValue</p></td>
+<td><p>string</p></td>
+</tr>
+<tr class="row-odd"><td><p>familyId</p></td>
+<td><p>string</p></td>
+</tr>
+<tr class="row-even"><td><p>idCountryRule</p></td>
+<td><p>string</p></td>
+</tr>
+<tr class="row-odd"><td><p>idFamilyRule</p></td>
+<td><p>string</p></td>
+</tr>
+<tr class="row-even"><td><p>idRule</p></td>
+<td><p>integer (int32)</p></td>
+</tr>
+<tr class="row-odd"><td><p>month</p></td>
+<td><p>integer (int32)</p></td>
+</tr>
+<tr class="row-even"><td><p>porcenCountryValue</p></td>
+<td><p>string</p></td>
+</tr>
+<tr class="row-odd"><td><p>porcenParentageValue</p></td>
+<td><p>string</p></td>
+</tr>
+<tr class="row-even"><td><p>productValue</p></td>
+<td><p>string</p></td>
+</tr>
+<tr class="row-odd"><td><p>providerValue</p></td>
+<td><p>string</p></td>
+</tr>
+<tr class="row-even"><td><p>year</p></td>
+<td><p>integer (int32)</p></td>
+</tr>
+</tbody>
+</table>
+<p>HistoricRuleDto:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 58%" />
+<col style="width: 42%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>businessAreaPorcentage</p></td>
+<td><p>string</p></td>
+</tr>
+<tr class="row-odd"><td><p>familyRuleId</p></td>
+<td><p>integer (int32)</p></td>
+</tr>
+<tr class="row-even"><td><p>storeRuleRuleId</p></td>
+<td><p>integer (int32)</p></td>
+</tr>
+</tbody>
+</table>
+<p>StoreDto:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 78%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Schema</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>id</p></td>
+<td><p>integer (int32)</p></td>
+</tr>
+</tbody>
+</table>
+<ol class="arabic" start="3">
+<li><p class="rubric" id="sw-components">SW Components</p>
+<ol class="arabic" start="3">
+<li><p class="rubric" id="basic-components">Basic components</p>
+</li>
+</ol>
+<ul class="simple">
+<li><p>Visual Studio 2017</p></li>
+<li><p>.NET Core 2.2 SDK (v2.2.402)</p></li>
+</ul>
+<ol class="arabic" start="4">
+<li><p class="rubric" id="sw-structure">SW Structure</p>
+<ol class="arabic">
+<li><p class="rubric" id="billingcloud-mvc-1">BillingCloud Mvc</p>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<p><a class="reference internal" href="../../_images/image4.png"><img alt="image3" src="../../_images/image4.png" style="width: 4.54559in; height: 5.58261in;" /></a></p>
+<div class="section" id="billingcloud">
+<h4>BillingCloud<a class="headerlink" href="#billingcloud" title="Permalink to this headline">¶</a></h4>
+<p><a class="reference internal" href="../../_images/image5.png"><img alt="image4" src="../../_images/image5.png" style="width: 4.97049in; height: 6.36522in;" /></a></p>
+</div>
+</div>
+<div class="section" id="algorithms-and-basic-libraries">
+<h3>Algorithms and basic libraries:<a class="headerlink" href="#algorithms-and-basic-libraries" title="Permalink to this headline">¶</a></h3>
+<p>Manage NuGet Packages:</p>
+<ul>
+<li><p>TelepizzaSeedwork: <a class="reference external" href="https://pkgs.dev.azure.com/TelepizzaIT/_packaging/Sales.Seedwork/nuget/v3/index.json">https://pkgs.dev.azure.com/TelepizzaIT/_packaging/Sales.Seedwork/nuget/v3/index.json</a></p></li>
+<li><p>nuget.org: <a class="reference external" href="https://api.nuget.org/v3/index.json">https://api.nuget.org/v3/index.json</a></p>
+<ol class="arabic" start="3">
+<li><p class="rubric" id="billingcloud-mvc-2">BillingCloud Mvc</p>
+</li>
+</ol>
+</li>
+</ul>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 81%" />
+<col style="width: 19%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Version</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>AWSSDK.CostExplorer</p></td>
+<td><p>3.3.100.10</p></td>
+</tr>
+<tr class="row-odd"><td><p>Irensaltali.Currency 1.0.2</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>Kafka.Producer.Sdk</p></td>
+<td><p>1.0.3</p></td>
+</tr>
+<tr class="row-odd"><td><p>Microsoft.AspNetCore.App</p></td>
+<td><p>2.2.0</p></td>
+</tr>
+<tr class="row-even"><td><p>Microsoft.AspNetCore.Authentication.AzureAD.UI</p></td>
+<td><p>2.2.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>Microsoft.AspNetCore.DataProtection.StackExchangeRedis</p></td>
+<td><p>2.2.5</p></td>
+</tr>
+<tr class="row-even"><td><p>Microsoft.AspNetCore.Hosting.Abstractions</p></td>
+<td><p>2.2.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>Microsoft.AspNetCore.Http.Abstractions</p></td>
+<td><p>2.2.0</p></td>
+</tr>
+<tr class="row-even"><td><p>Microsoft.AspNetCore.Mvc</p></td>
+<td><p>2.2.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>Microsoft.AspNetCore.Razor.Design</p></td>
+<td><p>2.2.0</p></td>
+</tr>
+<tr class="row-even"><td><p>Microsoft.Extensions.Caching.Abstractions</p></td>
+<td><p>2.2.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>Microsoft.Extensions.Caching.StackExchangeRedis</p></td>
+<td><p>2.2.5</p></td>
+</tr>
+<tr class="row-even"><td><p>Microsoft.Extensions.DependencyInjection</p></td>
+<td><p>2.2.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>Microsoft.Extensions.Hosting.Abstractions</p></td>
+<td><p>2.2.0</p></td>
+</tr>
+<tr class="row-even"><td><p>Microsoft.Extensions.Options.ConfigurationExtensions</p></td>
+<td><p>2.2.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>Microsoft.VisualStudio.Web.BrowserLink</p></td>
+<td><p>2.2.0</p></td>
+</tr>
+<tr class="row-even"><td><p>Microsoft.VisualStudio.Web.CodeGeneration.Design</p></td>
+<td><p>2.2.3</p></td>
+</tr>
+<tr class="row-odd"><td><p>Newtonsoft.Json</p></td>
+<td><p>12.0.2</p></td>
+</tr>
+<tr class="row-even"><td><p>Npoi.Mapper</p></td>
+<td><p>3.3.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>Seedwork.CrossCutting.Configuration</p></td>
+<td><p>1.0.3</p></td>
+</tr>
+<tr class="row-even"><td><p>Seedwork.CrossCutting.HttpClientInvoker</p></td>
+<td><p>1.0.38</p></td>
+</tr>
+<tr class="row-odd"><td><p>Seedwork.IAM.Services</p></td>
+<td><p>1.0.9</p></td>
+</tr>
+<tr class="row-even"><td><p>Seedwork.Kafka</p></td>
+<td><p>1.0.29</p></td>
+</tr>
+<tr class="row-odd"><td><p>Seedwork.Version</p></td>
+<td><p>1.0.7</p></td>
+</tr>
+<tr class="row-even"><td><p>Serilog</p></td>
+<td><p>2.8.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>Serilog.Exceptions</p></td>
+<td><p>5.3.1</p></td>
+</tr>
+<tr class="row-even"><td><p>Serilog.Extensions.Logging</p></td>
+<td><p>2.0.4</p></td>
+</tr>
+<tr class="row-odd"><td><p>Serilog.Sinks.Elasticsearch</p></td>
+<td><p>8.0.0</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="billingcloud-1">
+<span id="id26"></span><h4>BillingCloud<a class="headerlink" href="#billingcloud-1" title="Permalink to this headline">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 84%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Version</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>AutoMapper.Extensions.Microsoft.DependencyInjection</p></td>
+<td><p>6.1.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>Kralizek.Extensions.Configuration.AWSSecretsManager</p></td>
+<td><p>1.1.0</p></td>
+</tr>
+<tr class="row-even"><td><p>Microsoft.AspNetCore.App</p></td>
+<td><p>2.2.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>Microsoft.EntityFrameworkCore.Design</p></td>
+<td><p>2.2.4</p></td>
+</tr>
+<tr class="row-even"><td><p>Microsoft.Extensions.Caching.Redis</p></td>
+<td><p>2.2.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>Pomelo.EntityFrameworkCore.MySql</p></td>
+<td><p>2.2.0</p></td>
+</tr>
+<tr class="row-even"><td><p>Scrutor</p></td>
+<td><p>3.0.2</p></td>
+</tr>
+<tr class="row-odd"><td><p>Seedwork.CrossCutting.Configuration</p></td>
+<td><p>1.0.3</p></td>
+</tr>
+<tr class="row-even"><td><p>Seedwork.CrossCutting.HttpClientInvoker</p></td>
+<td><p>1.0.33</p></td>
+</tr>
+<tr class="row-odd"><td><p>Seedwork.CrossCutting.Injecter</p></td>
+<td><p>1.0.11</p></td>
+</tr>
+<tr class="row-even"><td><p>Seedwork.CrossCutting.MVC</p></td>
+<td><p>1.0.18</p></td>
+</tr>
+<tr class="row-odd"><td><p>Seedwork.CrossCutting.SwaggerExtensions</p></td>
+<td><p>1.0.8</p></td>
+</tr>
+<tr class="row-even"><td><p>Seedwork.Data</p></td>
+<td><p>1.0.11</p></td>
+</tr>
+<tr class="row-odd"><td><p>Seedwork.Domain</p></td>
+<td><p>1.0.12</p></td>
+</tr>
+<tr class="row-even"><td><p>Seedwork.Version</p></td>
+<td><p>1.0.6</p></td>
+</tr>
+<tr class="row-odd"><td><p>Serilog</p></td>
+<td><p>2.8.0</p></td>
+</tr>
+<tr class="row-even"><td><p>Serilog.Exceptions</p></td>
+<td><p>5.0.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>Serilog.Extensions.Logging</p></td>
+<td><p>2.0.4</p></td>
+</tr>
+<tr class="row-even"><td><p>Serilog.Sinks.Elasticsearch</p></td>
+<td><p>7.1.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>Swashbuckle.AspNetCore</p></td>
+<td><p>4.0.1</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../../index.html" class="btn btn-neutral float-left" title="Welcome to BlocksInCloud Billing’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Vector 2019
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
