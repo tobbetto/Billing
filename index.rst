@@ -1,0 +1,30 @@
+.. BlocksInCloud Billing documentation master file, created by
+   sphinx-quickstart on Thu Sep 26 12:08:26 2019.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Welcome to BlocksInCloud Billing's documentation!
+=================================================
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Guía Técnica:
+ 
+   en/technical_documentation/BILLIGT20190926
+ 
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+   :caption: Guía Funcional:
+
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:   
+   :caption: Guía de configuración:
+   
+  
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+   :caption: Glosario:
